@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+    environment{
+      test = "xy" 
+    }
+    parameters{
+        string(name:'pet',defaultValue:'jimmy',description:'name of pet')
+    }
+    options{
+        // retry(3)
+        // buildDiscarder(logRotator(numToKeepStr: '10', daysToKeepStr: '30'))
+        // disableConcurrentBuilds()
+		  timeout(time:20,unit:'SECONDS')
+        timestamps()
+        
+    }
+    stages {
+        stage('test'){
+            steps{
+                cleanWs()
+                sh """
+                echo "helloWorld" > a
+                echo "helloWorld" > b
+                echo "helloWorld" > c
+                echo "helloWorld" > d
+                """
+                sh "ls -lart && pwd"
+            }
+        }
+        stage('Hello') {
+            // options{
+            //     retry(3)
+            // }
+            steps {
+                // ÷cleanWs()
+                echo 'Hello World'
+                // sh 'mkdir $folder'
+                sh 'ls -lart'
+                sh 'pwd'
+                print BUILD_URL
+                sh "echo tool name is $tool"
+                print pet
+                retry(3){
+                    sh "ls -lart"
+                    sleep 60
+                }
+            }
+        }
+    }
+}
