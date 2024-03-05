@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+    environment{
+      test = "xy" 
+    }
+    parameters{
+        string(name:'pet',defaultValue:'jimmy',description:'name of pet')
+    }
+stages {
+  stage('hello') {
+steps {
+echo 'environment s1'
+echo "$ my pet name is,${params.pet}!"
+}
+}
+}
+
