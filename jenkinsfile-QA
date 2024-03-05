@@ -10,7 +10,7 @@ stages {
   stage('hello') {
 steps {
 echo 'environment s1'
-echo "$ my pet name is,${params.pet}"
+echo "my pet name is,${params.pet}"
 }
 }
 }
